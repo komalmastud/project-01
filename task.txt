@@ -1,0 +1,19 @@
+// RESTFULL API - JSON
+
+GET/api/users - HTML Document Render
+GET/api/users - List all users
+GET/api/users1 - Get the user with ID 1
+(dynamic path paragraph)
+GET/api/users/:id 
+:id-> Variable | Dynamic 
+
+GET/api/users2 - Get the user with ID 2
+
+POST /api/ users - create new user
+
+PATCH /api/ user/1 - Edit the user with ID 1 
+
+DELETE/api/ users/2 - Delete the user with ID 2
+
+
+
