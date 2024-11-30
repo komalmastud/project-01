@@ -1,0 +1,74 @@
+http response status codes indicate whether a specific HTTP request has been sucessfully completed Responses are grouped in five classes
+
+1.  Information Responses (100-199)
+2. Sucessful response (200-299)
+3. redirection messages (300-399)
+4. Client error messages(400-499)
+5. Server error responses (500-599)
+
+
+--200 : okay 
+
+ sucessfully!
+
+--201 Created
+
+The request suceeded and a new resources was created as a result this is typically the response sent after Post requests or some requets 
+
+
+--202 accepted 
+
+The request has been received but yet acted upon. Its non common there is low way in HTTP to later send an asynchronus response indicated outcome of the request
+
+
+401: unauthorized
+
+although the http standard specifies "unauthorized" semantically this response means "unautheticeted".that is the client must authenties itself to get the requested response 
+
+402: Payment Required 
+
+The HTTP 402 Payment Required status code is a non-standard response used to indicate that the server requires payment to process the request. It is not widely used and is considered experimental.
+
+403: Forbidden 
+
+The HTTP 403 Forbidden status code indicates that the server understands the request but refuses to authorize it. This means that the client does not have the necessary permissions to access the resource, even if they are authenticated.
+
+404: Not found 
+500 - Internal Server Error
+The server encountered an unexpected condition that prevented it from fulfilling the request.
+
+Example: A bug in server-side code or misconfiguration.
+
+501 - Not Implemented
+The server does not support the functionality required to fulfill the request.
+
+Example: The server doesn’t recognize the request method.
+
+502 - Bad Gateway
+The server, acting as a gateway or proxy, received an invalid response from the upstream server.
+
+Example: A reverse proxy (e.g., NGINX) gets a bad response from the backend.
+
+504 - Gateway Timeout
+The server, acting as a gateway or proxy, did not receive a timely response from the upstream server.
+
+Example: A backend service is too slow to respond.
+
+505 - HTTP Version Not Supported
+The server does not support the HTTP protocol version used in the request.
+
+Example: Sending an outdated HTTP version (like HTTP/1.0) to a modern server.
+
+506 - Variant Also Negotiates
+Indicates a configuration error in transparent content negotiation.
+
+Example: The server has a circular reference in its negotiation logic.
+
+
+300 - Multiple Choices: The requested resource has multiple representations, and the client must choose one. Example: A document with multiple formats (e.g., JSON, XML).
+ 301 - Moved Permanently: The requested resource has been permanently moved to a new URL. Example: Redirecting an old URL to a new one. 302 - Found (Previously "Moved Temporarily"): The requested resource is temporarily available at a different URL. Example: Used for temporary redirects. 
+ 303 - See Other: The client is redirected to a different URL using the GET method, regardless of the original method. Example: Redirecting to a success page after a POST request. 304 - Not Modified: Indicates the resource has not changed since the last request. Example: Used with caching mechanisms. 
+ 305 - Use Proxy (Deprecated): The requested resource must be accessed through a proxy. Example: Rarely used due to security concerns.
+ 306 - (Unused): Reserved for future use. No longer in use. 
+ 307 - Temporary Redirect: Similar to 302, but ensures the original HTTP method is preserved. Example: Redirecting POST requests to another URL without changing them to GET. 
+ 308 - Permanent Redirect: Similar to 301, but ensures the original HTTP method is preserved. Example: Permanently redirecting POST requests to another URL without changing them to GET.

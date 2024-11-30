@@ -5,8 +5,8 @@ const app = express();
 const PORT = 8001;
 
 // Middleware - Plugins
-app.use(express.json()); // Parses JSON body
-app.use(express.urlencoded({ extended: false })); // Parses URL-encoded body
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // Logging Middleware
 app.use((req, res, next) => {
@@ -23,14 +23,12 @@ app.get("/users", (req, res) => {
       ${users.map((user) => `<li>${user.first_name}</li>`).join("")}
     </ul>
   `;
-  res.send(html); // Sends an HTML list of user first names
+  res.send(html);
 });
 
-// REST API
 app.get("/api/users", (req, res) => {
   res.setHeader("X-MyName", "komal Mastud");
-  //Always add X to custom Headers
-  return res.json(users); // Returns all users as JSON
+  return res.json(users);
 });
 
 app
@@ -51,16 +49,30 @@ app
   });
 
 app.post("/api/users", (req, res) => {
-  const body = req.body;
-  users.push({ ...body, id: users.length + 1 });
+  const { first_name, last_name, email, gender, job_title } = req.body;
+
+  if (!first_name || !last_name || !email || !gender || !job_title) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  const newUser = {
+    id: users.length + 1,
+    first_name,
+    last_name,
+    email,
+    gender,
+    job_title,
+  };
+  users.push(newUser);
 
   try {
-    fs.writeFileSync("./MOCK_DATA.json", JSON.stringify(users));
-    return res.json({ status: "success!", id: users.length });
-  } catch (error) {
+    fs.writeFileSync("./MOCK_DATA.json", JSON.stringify(users, null, 2));
     return res
-      .status(500)
-      .json({ status: "error", message: "File write failed" });
+      .status(201)
+      .json({ message: "User added successfully!", user: newUser });
+  } catch (error) {
+    console.error("Error writing to file:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
