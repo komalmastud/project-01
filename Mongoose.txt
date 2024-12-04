@@ -1,0 +1,3 @@
+Scema - define the texture 
+schema - Model 
+Using we do CRUD operation 
