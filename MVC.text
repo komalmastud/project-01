@@ -1,0 +1,6 @@
+Model-View-controller 
+
+controller : manipulate the model
+model: model is updadate the view 
+
+cycle is runiing automatically 

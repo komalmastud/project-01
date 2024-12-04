@@ -1,97 +1,19 @@
 const express = require("express");
-const fs = require("fs");
-const mongoose = require("mongoose");
-const validator = require("validator");
-
 const app = express();
-const PORT = 8001;
+const bodyParser = require("body-parser");
 
-// Connect to MongoDB
-mongoose
-  .connect("mongodb://127.0.0.1:27017/youtube-app-1", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB Connected Successfully"))
-  .catch((err) => console.error("MongoDB Connection Error:", err));
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
 
-// Define User Schema and Model
-const userSchema = new mongoose.Schema({
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  jobTitle: { type: String, required: true },
-  gender: { type: String, required: true },
+// POST route to handle user creation
+app.post("/api/users", (req, res) => {
+  const user = req.body;
+  console.log("User received:", user);
+
+  res.status(201).json({ message: "User created successfully", user });
 });
 
-const User = mongoose.model("User", userSchema);
-
-// Middleware to parse JSON and URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Logging Middleware
-app.use((req, res, next) => {
-  console.log(`Incoming request: ${req.method} ${req.url}`);
-  const logMessage = `${new Date().toISOString()} - ${req.method} - ${
-    req.url
-  } - ${req.ip}\n`;
-  fs.appendFile("log.txt", logMessage, (err) => {
-    if (err) console.error("Failed to log request", err);
-  });
-  next();
-});
-
-// Routes
-//here i wanted all users await USer.find
-app.post("/api/users", async (req, res) => {
-  console.log("POST /api/users route hit"); // Debugging log
-  const { firstName, lastName, email, gender, jobTitle } = req.body;
-
-  // Validate required fields
-  if (!firstName || !lastName || !email || !gender || !jobTitle) {
-    return res.status(400).json({ error: "All fields are required." });
-  }
-
-  // Validate email format
-  if (!validator.isEmail(email)) {
-    return res.status(400).json({ error: "Invalid email format." });
-  }
-
-  try {
-    // Create and save user
-    const user = await User.create({
-      firstName,
-      lastName,
-      email,
-      gender,
-      jobTitle,
-    });
-
-    console.log("User Created:", user);
-    res.status(201).json({ message: "User created successfully", user });
-  } catch (error) {
-    if (error.code === 11000) {
-      return res.status(400).json({ error: "Email already exists." });
-    }
-    console.error("Error creating user:", error);
-    res.status(500).json({ error: "Internal server error." });
-  }
-});
-
-// Fallback Route for 404 Errors
-app.use((req, res) => {
-  console.log(`No route matched for ${req.method} ${req.url}`); // Log unmatched routes
-  res.status(404).json({ error: "Route not found" });
-});
-
-// Global Error Handler
-app.use((err, req, res, next) => {
-  console.error("Unhandled error:", err.stack);
-  res.status(500).json({ error: "Something went wrong!" });
-});
-
-// Start the Server
-app.listen(PORT, () => {
-  console.log(`Server started at http://localhost:${PORT}`);
+// Start the server
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
 });

@@ -47,3 +47,15 @@
 2024-12-02T11:30:32.272Z - POST - /api/users%0A - ::1
 2024-12-02T11:41:34.649Z - POST - /api/users - ::1
 2024-12-02T11:44:02.690Z - POST - /api/users%0A - ::1
+
+1733310696920: ::1 GET /api/users
+
+1733310961003: ::1 GET /api/users
+
+1733311068888: ::1 POST /api/users%0A
+
+1733311084860: ::1 POST /api/users%0A
+
+1733311105670: ::1 POST /api/user/%0A
+
+1733311204385: ::1 POST /api/user/%0A
